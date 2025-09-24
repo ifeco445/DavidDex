@@ -1,4 +1,4 @@
-## H1 - Lack of Minimum borrow amount Would allow attcakers open dust positions that would be unfavourable to liquidate
+## H1 - Lack of Minimum borrow amount Would allow attackers open dust positions that would be unfavourable to liquidate
 
 ## Description
 The Klend program allows user to borrow liquidity in return they pay interest for this borrowed liquidity, However when borrowing from the lend program it fails to combat attacker opening up dust positions that would be unfavaourable for liquidators to liquidate and gain rewards.
@@ -85,7 +85,7 @@ Enforce inclusion of fees to the withdrawal cap
 
 ## H-3 Missing accrueInterest before liquidation would make protocol and lender lose accrue nterests fees
 ## Description
-The refresh_reserves hels accumulate interests for the borrower accrding to timestamps of when the user opoened a borrowed position, However before liquidatioin protocol fails to call `refresh_reserve` to update interest of the borrower before liquidation, This oversight would make lender and protocol lose interest.
+The refresh_reserves helps accumulate interests for the borrower accrding to timestamps of when the user opened a borrow position, However before liquidation protocol fails to call `refresh_reserve` to update interest of the borrower before liquidation, This oversight would make lender and protocol lose interest.
 ```solidity
 fn process_impl(
     accounts: &LiquidateObligationAndRedeemReserveCollateral,
@@ -120,9 +120,9 @@ As we can call no call to refresh reserve before calling the lending operations 
 ## Recommended Mitigation
 Call accrueInterest before liquidations
 
-## H4- Liquidation amount is being truncated due to dividing fraction by raw amount
+## H4- Liquidation ratio amount is being truncated due to dividing fraction by raw amount
 ## Description
-Mixing fraction would big value, rust will try to do integer division with the u64 this would truncate the remaining values of the fraction
+Mixing fraction with big value, rust will try to do integer division with the u64 this would truncate the remaining values of the fraction
 ```solidity
         if debt_amount_to_liquidate < borrowed_amount {
             msg!(
